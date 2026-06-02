@@ -1,0 +1,520 @@
+/* Organization.css - Mobile Responsive Styles */
+
+.organization-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.organization-content {
+  padding: 2rem;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Header Section */
+.organization-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: slideInDown 0.5s ease-out;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+.organization-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.organization-title i {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 2rem;
+}
+
+.organization-subtitle {
+  color: #718096;
+  font-size: 1rem;
+}
+
+/* Main Card */
+.organization-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.organization-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Status Badge */
+.status-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.status-badge .badge {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Organization Name Section */
+.org-name-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.org-name-section h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.org-id {
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+/* Info Sections */
+.info-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.section-title i {
+  color: #667eea;
+  font-size: 1.25rem;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.info-item:hover {
+  background: #edf2f7;
+  transform: translateX(5px);
+}
+
+.info-item i {
+  font-size: 1.5rem;
+  color: #667eea;
+}
+
+.info-details {
+  flex: 1;
+}
+
+.info-details label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.info-details p {
+  font-size: 1rem;
+  color: #2d3748;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Address Card */
+.address-card {
+  background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+.address-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  color: #4a5568;
+}
+
+.address-line i {
+  color: #667eea;
+  font-size: 1.1rem;
+  min-width: 24px;
+}
+
+/* GST Card */
+.gst-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #fef5e7 0%, #fff9f0 100%);
+  border-radius: 12px;
+  border-left: 4px solid #f59e0b;
+  margin-top: 1rem;
+}
+
+.gst-card i {
+  font-size: 2rem;
+  color: #f59e0b;
+}
+
+.gst-details {
+  flex: 1;
+}
+
+.gst-details label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.gst-details p {
+  font-size: 1.1rem;
+  color: #2d3748;
+  font-weight: 600;
+  margin: 0;
+  font-family: monospace;
+}
+
+/* Toggle Details Button */
+.toggle-details-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  color: #667eea;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.toggle-details-btn:hover {
+  background: #edf2f7;
+  transform: translateY(-2px);
+}
+
+/* Additional Details */
+.additional-details {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 12px;
+  animation: slideInDown 0.3s ease-out;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item label {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.detail-item p {
+  margin: 0;
+  color: #2d3748;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.action-buttons .btn {
+  flex: 1;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.action-buttons .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+}
+
+.action-buttons .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.action-buttons .btn-outline-primary {
+  border: 2px solid #667eea;
+  color: #667eea;
+}
+
+.action-buttons .btn-outline-primary:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Loading State */
+.organization-loading {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.organization-loading .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Error State */
+.organization-error {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.organization-error i {
+  font-size: 4rem;
+  color: #dc3545;
+}
+
+.organization-error h3 {
+  color: #2d3748;
+  margin-top: 1rem;
+}
+
+.organization-error button {
+  margin-top: 1rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .organization-content {
+    padding: 1rem;
+  }
+
+  .organization-card {
+    padding: 1.5rem;
+  }
+
+  .organization-title {
+    font-size: 1.5rem;
+  }
+
+  .organization-title i {
+    font-size: 1.5rem;
+  }
+
+  .org-name-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .info-item {
+    padding: 0.75rem;
+  }
+
+  .address-card {
+    padding: 1rem;
+  }
+
+  .gst-card {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .gst-card i {
+    font-size: 2rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons .btn {
+    width: 100%;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .status-badge {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .organization-card {
+    padding: 1rem;
+  }
+
+  .organization-title {
+    font-size: 1.25rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .info-details p {
+    font-size: 0.875rem;
+  }
+
+  .gst-details p {
+    font-size: 0.9rem;
+    word-break: break-all;
+  }
+}
+
+/* Tablet Devices */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .organization-card {
+    max-width: 100%;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .navbar-custom,
+  .action-buttons,
+  .toggle-details-btn,
+  .status-badge {
+    display: none;
+  }
+
+  .organization-card {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .organization-page {
+    background: white;
+  }
+}
