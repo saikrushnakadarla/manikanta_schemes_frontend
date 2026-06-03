@@ -150,6 +150,12 @@ const Navbar = () => {
                 <i className="bi bi-person"></i>
                 <span>Users</span>
               </Link>
+            </li> 
+             <li>
+              <Link to="/schemes" onClick={() => setIsMobileMenuOpen(false)}>
+                <i className="bi bi-person"></i>
+                <span>Schemes</span>
+              </Link>
             </li>
             <li>
               <Link to="/organization" onClick={() => setIsMobileMenuOpen(false)}>

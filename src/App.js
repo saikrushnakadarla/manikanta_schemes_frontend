@@ -7,6 +7,10 @@ import CustomerRegistration from "./Components/CustomerRegistration/CustomerRegi
 import LoginPage from "./Components/Login/Login";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Organization from "./Components/Organization/Organization";
+import Users from "./Components/Users/Users";
+import UsersForm from "./Components/Users/UsersForm";
+import Schemes from "./Components/Schemes/Schemes";
+import SchemesForm from "./Components/Schemes/SchemesForm";
 
 function App() {
   return (
@@ -15,7 +19,11 @@ function App() {
         <Route exact path="/register" component={CustomerRegistration} /> 
          <Route exact path="/" component={LoginPage} /> 
           <Route exact path="/dashboard" component={Dashboard} /> 
-          <Route exact path="/organization" component={Organization} />
+          <Route exact path="/organization" component={Organization} /> 
+          <Route exact path="/users" component={Users} /> 
+<Route exact path="/schemes" component={Schemes} /> 
+<Route exact path="/schemesform" component={SchemesForm} />
+          <Route exact path="/usersform" component={UsersForm} />
       </Switch>
     </Router>
   ); 

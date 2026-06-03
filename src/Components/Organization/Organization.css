@@ -55,6 +55,34 @@
   font-size: 1rem;
 }
 
+/* Update Message */
+.update-message {
+  max-width: 900px;
+  margin: 0 auto 1rem auto;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideInDown 0.3s ease-out;
+}
+
+.update-message-success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.update-message-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.update-message i {
+  font-size: 1.25rem;
+}
+
 /* Main Card */
 .organization-card {
   background: white;
@@ -240,6 +268,73 @@
   font-family: monospace;
 }
 
+/* Edit Form Styles */
+.edit-form {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.edit-form-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.edit-form-section:last-child {
+  border-bottom: none;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.form-check-input {
+  width: 3rem;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.form-check-label {
+  font-weight: 600;
+  color: #4a5568;
+  cursor: pointer;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
 /* Toggle Details Button */
 .toggle-details-btn {
   width: 100%;
@@ -319,9 +414,14 @@
   border: none;
 }
 
-.action-buttons .btn-primary:hover {
+.action-buttons .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.action-buttons .btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .action-buttons .btn-outline-primary {
@@ -329,10 +429,26 @@
   color: #667eea;
 }
 
-.action-buttons .btn-outline-primary:hover {
+.action-buttons .btn-outline-primary:hover:not(:disabled) {
   background: #667eea;
   color: white;
   transform: translateY(-2px);
+}
+
+.action-buttons .btn-outline-secondary {
+  border: 2px solid #cbd5e0;
+  color: #718096;
+}
+
+.action-buttons .btn-outline-secondary:hover:not(:disabled) {
+  background: #cbd5e0;
+  color: #2d3748;
+  transform: translateY(-2px);
+}
+
+.action-buttons .btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 /* Loading State */
@@ -463,6 +579,11 @@
     justify-content: flex-end;
     margin-bottom: 1rem;
   }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
 }
 
 /* Small Mobile Devices */
@@ -487,6 +608,11 @@
     font-size: 0.9rem;
     word-break: break-all;
   }
+
+  .form-control {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
 }
 
 /* Tablet Devices */
@@ -505,7 +631,8 @@
   .navbar-custom,
   .action-buttons,
   .toggle-details-btn,
-  .status-badge {
+  .status-badge,
+  .update-message {
     display: none;
   }
 
