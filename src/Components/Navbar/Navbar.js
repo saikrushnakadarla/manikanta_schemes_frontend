@@ -40,7 +40,7 @@ const Navbar = () => {
     // Get user data from localStorage
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
-    
+
     setIsLoggingOut(true);
 
     // Show loading alert
@@ -77,7 +77,7 @@ const Navbar = () => {
         const data = await response.json().catch(() => ({}));
         console.log('Logout successful:', data);
       }
-      
+
     } catch (error) {
       console.error('Error during logout API call:', error);
       // Continue with local logout even if API fails
@@ -85,10 +85,10 @@ const Navbar = () => {
       // Clear local storage regardless of API response
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      
+
       // Close SweetAlert if open
       Swal.close();
-      
+
       // Show success message
       await Swal.fire({
         title: 'Logged Out!',
@@ -98,10 +98,10 @@ const Navbar = () => {
         showConfirmButton: false,
         background: '#fff',
       });
-      
+
       // Navigate to login page
       history.push('/');
-      
+
       // Close mobile menu if open
       setIsMobileMenuOpen(false);
       setIsLoggingOut(false);
@@ -114,7 +114,7 @@ const Navbar = () => {
         {/* Left side - Logo */}
         <div className="navbar-logo">
           <Link to="/dashboard">
-            <img 
+            <img
               src={logoImage}
               alt="Company Logo"
               className="logo-image"
@@ -150,11 +150,23 @@ const Navbar = () => {
                 <i className="bi bi-person"></i>
                 <span>Users</span>
               </Link>
-            </li> 
-             <li>
+            </li>
+            <li>
               <Link to="/schemes" onClick={() => setIsMobileMenuOpen(false)}>
-                <i className="bi bi-person"></i>
+                <i className="bi bi-journal-bookmark-fill"></i>
                 <span>Schemes</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/customers" onClick={() => setIsMobileMenuOpen(false)}>
+                <i className="bi bi-people-fill"></i>
+                <span>Customers</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/customerschemesenrolment" onClick={() => setIsMobileMenuOpen(false)}>
+                <i className="bi bi-journal-bookmark-fill"></i>
+                <span>Schemes Enrolment</span>
               </Link>
             </li>
             <li>
@@ -164,8 +176,8 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <button 
-                onClick={handleLogout} 
+              <button
+                onClick={handleLogout}
                 className="logout-btn"
                 disabled={isLoggingOut}
               >
