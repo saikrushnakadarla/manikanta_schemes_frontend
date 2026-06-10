@@ -146,6 +146,24 @@ function Customers() {
     });
   };
 
+  // New function to handle update with FormData
+  const handleUpdateCustomer = async (customer) => {
+    Swal.fire({
+      title: 'Update Customer',
+      text: `Update information for "${customer.name}"?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#667eea',
+      cancelButtonColor: '#dc3545',
+      confirmButtonText: 'Yes, edit',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleEditCustomer(customer);
+      }
+    });
+  };
+
   const filteredCustomers = customers.filter(customer =>
     customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     customer.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -333,7 +351,7 @@ function Customers() {
                           <div className="action-buttons-cell">
                             <button 
                               className="edit-btn"
-                              onClick={() => handleEditCustomer(customer)}
+                              onClick={() => handleUpdateCustomer(customer)}
                               title="Edit Customer"
                             >
                               <i className="bi bi-pencil-fill"></i>

@@ -35,7 +35,8 @@ function CustomersForm() {
     referred_person_id: '',
     referred_person_referral_code: '',
     customer_status: 'active',
-    kyc_status: 'pending'
+    kyc_status: 'pending',
+    join_date: new Date().toISOString().split('T')[0]
   });
 
   useEffect(() => {
@@ -63,7 +64,8 @@ function CustomersForm() {
         referred_person_id: location.state.customerData.referred_person_id || '',
         referred_person_referral_code: location.state.customerData.referred_person_referral_code || '',
         customer_status: location.state.customerData.customer_status || 'active',
-        kyc_status: location.state.customerData.kyc_status || 'pending'
+        kyc_status: location.state.customerData.kyc_status || 'pending',
+        join_date: location.state.customerData.join_date || new Date().toISOString().split('T')[0]
       });
     }
   }, [location]);
@@ -110,55 +112,17 @@ function CustomersForm() {
   };
 
   const validateStep2 = () => {
-    if (!formData.address.trim()) {
-      Swal.fire({ title: 'Error!', text: 'Address is required', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
-    if (!formData.city.trim()) {
-      Swal.fire({ title: 'Error!', text: 'City is required', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
-    if (!formData.pin.trim()) {
-      Swal.fire({ title: 'Error!', text: 'PIN code is required', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
-    if (formData.pin.length !== 6) {
-      Swal.fire({ title: 'Error!', text: 'PIN code must be 6 digits', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
+    // Address, city, pin are NOT mandatory according to API
     return true;
   };
 
   const validateStep3 = () => {
-    if (!formData.aadhaar_number.trim()) {
-      Swal.fire({ title: 'Error!', text: 'Aadhaar number is required', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
-    if (formData.aadhaar_number.length !== 12) {
-      Swal.fire({ title: 'Error!', text: 'Aadhaar number must be 12 digits', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
-    if (!formData.pan_number.trim()) {
-      Swal.fire({ title: 'Error!', text: 'PAN number is required', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    if (!panRegex.test(formData.pan_number)) {
-      Swal.fire({ title: 'Error!', text: 'Please enter a valid PAN number', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
+    // Aadhaar and PAN are NOT mandatory according to API
     return true;
   };
 
   const validateStep4 = () => {
-    if (!formData.nominee_name.trim()) {
-      Swal.fire({ title: 'Error!', text: 'Nominee name is required', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
-    if (!formData.relationship.trim()) {
-      Swal.fire({ title: 'Error!', text: 'Relationship with nominee is required', icon: 'error', confirmButtonColor: '#dc3545' });
-      return false;
-    }
+    // Nominee fields are NOT mandatory according to API
     return true;
   };
 
@@ -178,33 +142,38 @@ function CustomersForm() {
 
     try {
       const token = localStorage.getItem('token');
-      const requestData = {
-        name: formData.name,
-        address: formData.address,
-        city: formData.city,
-        pin: formData.pin,
-        phone_number: formData.phone_number,
-        email: formData.email,
-        aadhaar_number: formData.aadhaar_number,
-        pan_number: formData.pan_number,
-        nominee_name: formData.nominee_name,
-        nominee_email: formData.nominee_email,
-        nominee_phone_number: formData.nominee_phone_number,
-        relationship: formData.relationship,
-        nominee_aadhaar_number: formData.nominee_aadhaar_number,
-        nominee_pan_number: formData.nominee_pan_number,
-        remarks: formData.remarks,
-        referred_person_name: formData.referred_person_name,
-        referred_person_id: formData.referred_person_id,
-        referred_person_referral_code: formData.referred_person_referral_code,
-        customer_status: formData.customer_status,
-        kyc_status: formData.kyc_status,
-        join_date: new Date().toISOString().split('T')[0]
-      };
       
-      if (formData.password) {
-        requestData.password = formData.password;
-      }
+      // Create FormData object
+      const formDataObj = new FormData();
+      
+      // Add only the fields that are mandatory or have values
+      // Mandatory fields: name, phone_number, email, join_date, password
+      if (formData.name) formDataObj.append('name', formData.name);
+      if (formData.phone_number) formDataObj.append('phone_number', formData.phone_number);
+      if (formData.email) formDataObj.append('email', formData.email);
+      if (formData.join_date) formDataObj.append('join_date', formData.join_date);
+      
+      // Add password (mandatory for create, optional for update)
+      if (formData.password) formDataObj.append('password', formData.password);
+      
+      // Add optional fields (only if they have values)
+      if (formData.address) formDataObj.append('address', formData.address);
+      if (formData.city) formDataObj.append('city', formData.city);
+      if (formData.pin) formDataObj.append('pin', formData.pin);
+      if (formData.aadhaar_number) formDataObj.append('aadhaar_number', formData.aadhaar_number);
+      if (formData.pan_number) formDataObj.append('pan_number', formData.pan_number);
+      if (formData.customer_status) formDataObj.append('customer_status', formData.customer_status);
+      if (formData.kyc_status) formDataObj.append('kyc_status', formData.kyc_status);
+      if (formData.nominee_name) formDataObj.append('nominee_name', formData.nominee_name);
+      if (formData.nominee_email) formDataObj.append('nominee_email', formData.nominee_email);
+      if (formData.nominee_phone_number) formDataObj.append('nominee_phone_number', formData.nominee_phone_number);
+      if (formData.relationship) formDataObj.append('relationship', formData.relationship);
+      if (formData.nominee_aadhaar_number) formDataObj.append('nominee_aadhaar_number', formData.nominee_aadhaar_number);
+      if (formData.nominee_pan_number) formDataObj.append('nominee_pan_number', formData.nominee_pan_number);
+      if (formData.remarks) formDataObj.append('remarks', formData.remarks);
+      if (formData.referred_person_name) formDataObj.append('referred_person_name', formData.referred_person_name);
+      if (formData.referred_person_id) formDataObj.append('referred_person_id', formData.referred_person_id);
+      if (formData.referred_person_referral_code) formDataObj.append('referred_person_referral_code', formData.referred_person_referral_code);
       
       let url = 'http://187.127.147.245:81/api/customers/';
       let method = 'POST';
@@ -217,11 +186,9 @@ function CustomersForm() {
       const response = await fetch(url, {
         method: method,
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
           'Authorization': token ? `Bearer ${token}` : '',
         },
-        body: JSON.stringify(requestData)
+        body: formDataObj  // Send as FormData instead of JSON
       });
 
       const responseText = await response.text();
@@ -383,18 +350,18 @@ function CustomersForm() {
                   </h3>
 
                   <div className="form-group">
-                    <label>Address <span className="required">*</span></label>
-                    <input type="text" name="address" className="form-control" placeholder="Street address" value={formData.address} onChange={handleInputChange} required />
+                    <label>Address</label>
+                    <input type="text" name="address" className="form-control" placeholder="Street address" value={formData.address} onChange={handleInputChange} />
                   </div>
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>City <span className="required">*</span></label>
-                      <input type="text" name="city" className="form-control" placeholder="City" value={formData.city} onChange={handleInputChange} required />
+                      <label>City</label>
+                      <input type="text" name="city" className="form-control" placeholder="City" value={formData.city} onChange={handleInputChange} />
                     </div>
                     <div className="form-group">
-                      <label>PIN Code <span className="required">*</span></label>
-                      <input type="text" name="pin" className="form-control" placeholder="6-digit PIN" value={formData.pin} onChange={handleInputChange} maxLength="6" required />
+                      <label>PIN Code</label>
+                      <input type="text" name="pin" className="form-control" placeholder="6-digit PIN" value={formData.pin} onChange={handleInputChange} maxLength="6" />
                     </div>
                   </div>
                 </div>
@@ -410,12 +377,12 @@ function CustomersForm() {
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>Aadhaar Number <span className="required">*</span></label>
-                      <input type="text" name="aadhaar_number" className="form-control" placeholder="12-digit Aadhaar" value={formData.aadhaar_number} onChange={handleInputChange} maxLength="12" required />
+                      <label>Aadhaar Number</label>
+                      <input type="text" name="aadhaar_number" className="form-control" placeholder="12-digit Aadhaar" value={formData.aadhaar_number} onChange={handleInputChange} maxLength="12" />
                     </div>
                     <div className="form-group">
-                      <label>PAN Number <span className="required">*</span></label>
-                      <input type="text" name="pan_number" className="form-control" placeholder="PAN (e.g., ABCDE1234F)" value={formData.pan_number} onChange={handleInputChange} required />
+                      <label>PAN Number</label>
+                      <input type="text" name="pan_number" className="form-control" placeholder="PAN (e.g., ABCDE1234F)" value={formData.pan_number} onChange={handleInputChange} />
                     </div>
                   </div>
 
@@ -441,12 +408,12 @@ function CustomersForm() {
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>Nominee Name <span className="required">*</span></label>
-                      <input type="text" name="nominee_name" className="form-control" placeholder="Nominee full name" value={formData.nominee_name} onChange={handleInputChange} required />
+                      <label>Nominee Name</label>
+                      <input type="text" name="nominee_name" className="form-control" placeholder="Nominee full name" value={formData.nominee_name} onChange={handleInputChange} />
                     </div>
                     <div className="form-group">
-                      <label>Relationship <span className="required">*</span></label>
-                      <input type="text" name="relationship" className="form-control" placeholder="e.g., Spouse, Son, Daughter" value={formData.relationship} onChange={handleInputChange} required />
+                      <label>Relationship</label>
+                      <input type="text" name="relationship" className="form-control" placeholder="e.g., Spouse, Son, Daughter" value={formData.relationship} onChange={handleInputChange} />
                     </div>
                   </div>
 
@@ -485,7 +452,7 @@ function CustomersForm() {
                   {loading ? (
                     <><span className="spinner-border spinner-border-sm"></span> Processing...</>
                   ) : (
-                    currentStep === 4 ? (isEditMode ? 'Update Customer' : 'Submit Registration') : 'Next <i className="bi bi-chevron-right"></i>'
+                    currentStep === 4 ? (isEditMode ? 'Update Customer' : 'Submit Registration') : 'Next'
                   )}
                 </button>
                 <button type="button" className="btn-cancel" onClick={handleCancel}>
@@ -496,7 +463,7 @@ function CustomersForm() {
           </div>
         </div>
       </div>
-    </div>
+    </div> 
   );
 }
 
