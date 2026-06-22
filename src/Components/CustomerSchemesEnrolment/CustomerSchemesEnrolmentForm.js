@@ -151,12 +151,12 @@ function CustomerSchemesEnrolmentForm() {
         total_paid_amount: isEditMode ? (formData.total_paid_amount || 0) : 0
       };
       
-      let url = 'http://187.127.147.245:81/api/customer-enrollments/';
+      let url = 'http://187.127.147.245:81/api/customer-scheme-enrollments/';
       let method = 'POST';
       let successMessage = 'Customer enrolled in scheme successfully!';
       
       if (isEditMode) {
-        url = `http://187.127.147.245:81/api/customer-enrollments/${enrollmentId}/`;
+        url = `http://187.127.147.245:81/api/customer-scheme-enrollments/${enrollmentId}/`;
         method = 'PUT';
         successMessage = 'Enrollment updated successfully!';
       }

@@ -28,7 +28,7 @@ function CustomerSchemesEnrolment() {
       const token = localStorage.getItem('token');
       
       // Fetch enrollments
-      const enrollmentsResponse = await fetch('http://187.127.147.245:81/api/customer-enrollments/', {
+      const enrollmentsResponse = await fetch('http://187.127.147.245:81/api/customer-scheme-enrollments/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -161,7 +161,7 @@ function CustomerSchemesEnrolment() {
       if (result.isConfirmed) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://187.127.147.245:81/api/customer-enrollments/${enrollment.enrollment_id}/`, {
+          const response = await fetch(`http://187.127.147.245:81/api/customer-scheme-enrollments/${enrollment.enrollment_id}/`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
