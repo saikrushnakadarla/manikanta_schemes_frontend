@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Schemes.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function Schemes() {
   const history = useHistory();
@@ -23,7 +24,7 @@ function Schemes() {
   const fetchSchemes = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://187.127.147.245:81/api/schemes/', {
+      const response = await fetch(`${baseURL}/api/schemes/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +115,7 @@ function Schemes() {
       if (result.isConfirmed) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://187.127.147.245:81/api/schemes/${scheme.scheme_id}/`, {
+          const response = await fetch(`${baseURL}/api/schemes/${scheme.scheme_id}/`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',

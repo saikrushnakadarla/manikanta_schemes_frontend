@@ -5,6 +5,7 @@ import Navbar from '../Navbar/Navbar';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './UsersForm.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function UsersForm() {
   const history = useHistory();
@@ -149,11 +150,11 @@ function UsersForm() {
         requestData.password = formData.password;
       }
       
-      let url = 'http://187.127.147.245:81/api/users/';
+      let url = `${baseURL}/api/users/`;
       let method = 'POST';
       
       if (isEditMode) {
-        url = `http://187.127.147.245:81/api/users/${userId}/`;
+        url = `${baseURL}/api/users/${userId}/`;
         method = 'PUT';
       }
       

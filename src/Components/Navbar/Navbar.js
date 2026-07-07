@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
 // Import your logo image
 import logoImage from './images/MANIKANTHA JEWELLERS FINAL LOOG DESIGN (1)_page-0001.jpg'; // Adjust the path as needed
+import baseURL from '../URL/NodeBaseURL';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -57,7 +58,7 @@ const Navbar = () => {
 
     try {
       // Call logout API
-      const response = await fetch('http://187.127.147.245:81/api/auth/logout/', {
+      const response = await fetch(`${baseURL}/api/auth/logout/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

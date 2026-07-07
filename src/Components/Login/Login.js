@@ -5,6 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './Login.css';
 // Import your company logo
 import companyLogo from '../Navbar/images/MANIKANTHA JEWELLERS FINAL LOOG DESIGN (1)_page-0001.jpg'; // Adjust the path to your logo image
+import baseURL from '../URL/NodeBaseURL';
 
 const LoginPage = () => {
   const history = useHistory();
@@ -57,7 +58,7 @@ const LoginPage = () => {
     setApiError('');
 
     try {
-      const response = await fetch('http://187.127.147.245:81/api/auth/login/', {
+      const response = await fetch(`${baseURL}/api/auth/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

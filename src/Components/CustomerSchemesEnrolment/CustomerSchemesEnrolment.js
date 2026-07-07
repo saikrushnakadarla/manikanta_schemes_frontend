@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CustomerSchemesEnrolment.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function CustomerSchemesEnrolment() {
   const history = useHistory();
@@ -28,7 +29,7 @@ function CustomerSchemesEnrolment() {
       const token = localStorage.getItem('token');
       
       // Fetch enrollments
-      const enrollmentsResponse = await fetch('http://187.127.147.245:81/api/customer-scheme-enrollments/', {
+      const enrollmentsResponse = await fetch(`${baseURL}/api/customer-scheme-enrollments/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +50,7 @@ function CustomerSchemesEnrolment() {
       }
 
       // Fetch customers for dropdown
-      const customersResponse = await fetch('http://187.127.147.245:81/api/customers/', {
+      const customersResponse = await fetch(`${baseURL}/api/customers/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ function CustomerSchemesEnrolment() {
       }
 
       // Fetch schemes for dropdown
-      const schemesResponse = await fetch('http://187.127.147.245:81/api/schemes/', {
+      const schemesResponse = await fetch(`${baseURL}/api/schemes/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -161,7 +162,7 @@ function CustomerSchemesEnrolment() {
       if (result.isConfirmed) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://187.127.147.245:81/api/customer-scheme-enrollments/${enrollment.enrollment_id}/`, {
+          const response = await fetch(`${baseURL}/api/customer-scheme-enrollments/${enrollment.enrollment_id}/`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',

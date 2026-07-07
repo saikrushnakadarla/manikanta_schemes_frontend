@@ -4,6 +4,7 @@ import Navbar from '../Navbar/Navbar';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CustomersForm.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function CustomersForm() {
   const history = useHistory();
@@ -175,11 +176,11 @@ function CustomersForm() {
       if (formData.referred_person_id) formDataObj.append('referred_person_id', formData.referred_person_id);
       if (formData.referred_person_referral_code) formDataObj.append('referred_person_referral_code', formData.referred_person_referral_code);
       
-      let url = 'http://187.127.147.245:81/api/customers/';
+      let url = `${baseURL}/api/customers/`;
       let method = 'POST';
       
       if (isEditMode) {
-        url = `http://187.127.147.245:81/api/customers/${customerId}/`;
+        url = `${baseURL}/api/customers/${customerId}/`;
         method = 'PUT';
       }
       

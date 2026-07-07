@@ -4,6 +4,7 @@ import Navbar from '../Navbar/Navbar';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Organization.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function Organization() {
   const [organization, setOrganization] = useState(null);
@@ -33,7 +34,7 @@ function Organization() {
   const fetchOrganization = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://187.127.147.245:81/api/organization/', {
+      const response = await fetch(`${baseURL}/api/organization/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +97,7 @@ function Organization() {
         is_active: editFormData.is_active
       };
 
-      const response = await fetch('http://187.127.147.245:81/api/organization/', {
+      const response = await fetch(`${baseURL}/api/organization/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

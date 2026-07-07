@@ -4,6 +4,7 @@ import Navbar from '../Navbar/Navbar';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CustomerSchemesEnrolment.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function CustomerSchemesEnrolmentForm() {
   const history = useHistory();
@@ -56,7 +57,7 @@ function CustomerSchemesEnrolmentForm() {
       const token = localStorage.getItem('token');
       
       if (customers.length === 0) {
-        const customersResponse = await fetch('http://187.127.147.245:81/api/customers/', {
+        const customersResponse = await fetch(`${baseURL}/api/customers/`, {
           headers: { 'Authorization': token ? `Bearer ${token}` : '' }
         });
         if (customersResponse.ok) {
@@ -66,7 +67,7 @@ function CustomerSchemesEnrolmentForm() {
       }
       
       if (schemes.length === 0) {
-        const schemesResponse = await fetch('http://187.127.147.245:81/api/schemes/', {
+        const schemesResponse = await fetch(`${baseURL}/api/schemes/`, {
           headers: { 'Authorization': token ? `Bearer ${token}` : '' }
         });
         if (schemesResponse.ok) {
@@ -151,12 +152,12 @@ function CustomerSchemesEnrolmentForm() {
         total_paid_amount: isEditMode ? (formData.total_paid_amount || 0) : 0
       };
       
-      let url = 'http://187.127.147.245:81/api/customer-scheme-enrollments/';
+      let url = `${baseURL}/api/customer-scheme-enrollments/`;
       let method = 'POST';
       let successMessage = 'Customer enrolled in scheme successfully!';
       
       if (isEditMode) {
-        url = `http://187.127.147.245:81/api/customer-scheme-enrollments/${enrollmentId}/`;
+        url = `${baseURL}/api/customer-scheme-enrollments/${enrollmentId}/`;
         method = 'PUT';
         successMessage = 'Enrollment updated successfully!';
       }

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useHistory } from 'react-router-dom';
 import './Users.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function Users() {
   const history = useHistory();
@@ -24,7 +25,7 @@ function Users() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://187.127.147.245:81/api/users/', {
+      const response = await fetch(`${baseURL}/api/users/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +107,7 @@ function Users() {
       if (result.isConfirmed) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://187.127.147.245:81/api/users/${user.id}/`, {
+          const response = await fetch(`${baseURL}/api/users/${user.id}/`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',

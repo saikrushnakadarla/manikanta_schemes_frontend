@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useHistory } from 'react-router-dom';
 import './Customers.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function Customers() {
   const history = useHistory();
@@ -23,7 +24,7 @@ function Customers() {
   const fetchCustomers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://187.127.147.245:81/api/customers/', {
+      const response = await fetch(`${baseURL}/api/customers/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +112,7 @@ function Customers() {
       if (result.isConfirmed) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://187.127.147.245:81/api/customers/${customer.id}/`, {
+          const response = await fetch(`${baseURL}/api/customers/${customer.id}/`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',

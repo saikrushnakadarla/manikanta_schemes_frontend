@@ -4,6 +4,7 @@ import Navbar from '../Navbar/Navbar';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SchemesForm.css';
+import baseURL from '../URL/NodeBaseURL';
 
 function SchemesForm() {
   const history = useHistory();
@@ -169,11 +170,11 @@ function SchemesForm() {
         y_value: parseInt(formData.y_value)
       };
       
-      let url = 'http://187.127.147.245:81/api/schemes/';
+      let url = `${baseURL}/api/schemes/`;
       let method = 'POST';
       
       if (isEditMode) {
-        url = `http://187.127.147.245:81/api/schemes/${schemeId}/`;
+        url = `${baseURL}/api/schemes/${schemeId}/`;
         method = 'PUT';
       }
       
