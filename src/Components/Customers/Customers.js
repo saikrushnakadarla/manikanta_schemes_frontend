@@ -37,14 +37,73 @@ function Customers() {
       }
 
       const result = await response.json();
-      
+
+      // Handle both array and object responses
+      let customersData = [];
       if (Array.isArray(result)) {
-        setCustomers(result);
+        customersData = result;
       } else if (result.status === 'success' && Array.isArray(result.data)) {
-        setCustomers(result.data);
+        customersData = result.data;
+      } else if (result.data && Array.isArray(result.data)) {
+        customersData = result.data;
       } else {
         throw new Error('Invalid data format received');
       }
+
+      // Transform the data to match expected structure
+      const transformedCustomers = customersData.map(customer => ({
+        id: customer.account_id,
+        name: customer.account_name || customer.print_name || 'N/A',
+        print_name: customer.print_name,
+        account_group: customer.account_group,
+        email: customer.email || 'N/A',
+        phone_number: customer.phone || customer.mobile || 'N/A',
+        mobile: customer.mobile,
+        city: customer.city || 'N/A',
+        pincode: customer.pincode || 'N/A',
+        state: customer.state || 'N/A',
+        address: customer.address1 || customer.address2 || 'N/A',
+        address1: customer.address1,
+        address2: customer.address2,
+        aadhaar_number: customer.aadhar_card || 'N/A',
+        pan_number: customer.pan_card || 'N/A',
+        kyc_status: customer.kyc_status || 'pending',
+        customer_status: customer.account_group === 'Customers' ? 'active' : 'active',
+        join_date: customer.joining_date || customer.created_at || null,
+        created_at: customer.created_at,
+        anniversary: customer.anniversary,
+        birthday: customer.birthday,
+        // Additional fields
+        op_bal: customer.op_bal,
+        metal_balance: customer.metal_balance,
+        dr_cr: customer.dr_cr,
+        state_code: customer.state_code,
+        contact_person: customer.contact_person,
+        bank_account_no: customer.bank_account_no,
+        bank_name: customer.bank_name,
+        ifsc_code: customer.ifsc_code,
+        branch: customer.branch,
+        gst_in: customer.gst_in,
+        religion: customer.religion,
+        images: customer.images,
+        aadhaar_document: customer.aadhaar_document,
+        pan_document: customer.pan_document,
+        verified_by: customer.verified_by,
+        rejection_reason: customer.rejection_reason,
+        referred_person_name: customer.referred_person_name,
+        referred_person_id: customer.referred_person_id,
+        referred_person_referral_code: customer.referred_person_referral_code,
+        customer_referral_code: customer.customer_referral_code,
+        nominee_name: customer.nominee_name,
+        nominee_email: customer.nominee_email,
+        nominee_phone_number: customer.nominee_phone_number,
+        relationship: customer.relationship,
+        nominee_aadhaar_number: customer.nominee_aadhaar_number,
+        nominee_pan_number: customer.nominee_pan_number,
+        remarks: customer.remarks
+      }));
+
+      setCustomers(transformedCustomers);
     } catch (error) {
       console.error('Error fetching customers:', error);
       setError(error.message);
@@ -55,16 +114,23 @@ function Customers() {
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return 'N/A';
+      return date.toLocaleDateString('en-IN', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    } catch {
+      return 'N/A';
+    }
   };
 
   const getStatusBadgeClass = (status) => {
-    switch(status) {
+    if (!status) return 'status-default';
+    const statusLower = status.toLowerCase();
+    switch (statusLower) {
       case 'active': return 'status-active';
       case 'inactive': return 'status-inactive';
       case 'pending': return 'status-pending';
@@ -97,6 +163,24 @@ function Customers() {
       state: { customerData: customer, isEditMode: true }
     });
   };
+
+  // Add this function to handle navigation to schemes page
+  const handleViewSchemes = (customer) => {
+    // Store customer ID in localStorage for the schemes page to use
+    localStorage.setItem('selectedCustomerId', customer.id);
+    localStorage.setItem('selectedCustomerName', customer.name);
+
+    // Navigate to schemes page with customer data
+    history.push({
+      pathname: '/customer_schemes',
+      state: {
+        customerId: customer.id,
+        customerName: customer.name,
+        customerData: customer
+      }
+    });
+  };
+
 
   const handleDeleteCustomer = (customer) => {
     Swal.fire({
@@ -147,7 +231,6 @@ function Customers() {
     });
   };
 
-  // New function to handle update with FormData
   const handleUpdateCustomer = async (customer) => {
     Swal.fire({
       title: 'Update Customer',
@@ -165,12 +248,19 @@ function Customers() {
     });
   };
 
-  const filteredCustomers = customers.filter(customer =>
-    customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.phone_number?.includes(searchTerm) ||
-    customer.city?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter customers based on search
+  const filteredCustomers = customers.filter(customer => {
+    if (!searchTerm) return true;
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      customer.name?.toLowerCase().includes(searchLower) ||
+      customer.email?.toLowerCase().includes(searchLower) ||
+      customer.phone_number?.includes(searchTerm) ||
+      customer.city?.toLowerCase().includes(searchLower) ||
+      customer.state?.toLowerCase().includes(searchLower) ||
+      customer.print_name?.toLowerCase().includes(searchLower)
+    );
+  });
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -212,7 +302,7 @@ function Customers() {
   return (
     <div className="customers-page">
       <Navbar />
-      
+
       <div className="customers-content">
         <div className="container-fluid">
           <div className="customers-header">
@@ -309,20 +399,20 @@ function Customers() {
                         <td data-label="Name">
                           <div className="customer-name-cell">
                             <div className="customer-avatar">
-                              {customer.name?.charAt(0).toUpperCase()}
+                              {customer.name?.charAt(0).toUpperCase() || '?'}
                             </div>
                             <span className="customer-name">{customer.name || 'N/A'}</span>
                           </div>
                         </td>
                         <td data-label="Email">
                           <a href={`mailto:${customer.email}`} className="email-link">
-                            <i className="bi bi-envelope-fill"></i> 
+                            <i className="bi bi-envelope-fill"></i>
                             <span>{customer.email || 'N/A'}</span>
                           </a>
                         </td>
                         <td data-label="Phone">
                           <a href={`tel:${customer.phone_number}`} className="phone-link">
-                            <i className="bi bi-telephone-fill"></i> 
+                            <i className="bi bi-telephone-fill"></i>
                             <span>{customer.phone_number || 'N/A'}</span>
                           </a>
                         </td>
@@ -333,7 +423,7 @@ function Customers() {
                           </div>
                         </td>
                         <td data-label="KYC Status">
-                          <span className={`kyc-status-badge ${customer.kyc_status}`}>
+                          <span className={`kyc-status-badge ${customer.kyc_status || 'pending'}`}>
                             {customer.kyc_status || 'pending'}
                           </span>
                         </td>
@@ -345,31 +435,39 @@ function Customers() {
                         <td data-label="Join Date">
                           <div className="date-info">
                             <i className="bi bi-calendar3"></i>
-                            <span>{formatDate(customer.join_date)}</span>
+                            <span>{formatDate(customer.join_date || customer.created_at)}</span>
                           </div>
                         </td>
                         <td data-label="Actions">
                           <div className="action-buttons-cell">
-                            <button 
+                            <button
                               className="edit-btn"
                               onClick={() => handleUpdateCustomer(customer)}
                               title="Edit Customer"
                             >
                               <i className="bi bi-pencil-fill"></i>
                             </button>
-                            <button 
+                            <button
                               className="delete-btn"
                               onClick={() => handleDeleteCustomer(customer)}
                               title="Delete Customer"
                             >
                               <i className="bi bi-trash-fill"></i>
                             </button>
-                            <button 
+                            <button
                               className="view-btn"
                               onClick={() => handleViewDetails(customer)}
                               title="View Details"
                             >
                               <i className="bi bi-eye-fill"></i>
+                            </button>
+
+                            <button
+                              className="schemes-btn"
+                              onClick={() => handleViewSchemes(customer)}
+                              title="View Enrolled Schemes"
+                            >
+                              <i className="bi bi-journal-bookmark-fill"></i>
                             </button>
                           </div>
                         </td>
@@ -466,12 +564,12 @@ function Customers() {
             <div className="modal-body">
               <div className="modal-avatar">
                 <div className="large-avatar">
-                  {selectedCustomer.name?.charAt(0).toUpperCase()}
+                  {selectedCustomer.name?.charAt(0).toUpperCase() || '?'}
                 </div>
                 <h4>{selectedCustomer.name || 'N/A'}</h4>
                 <span className="customer-id-badge">ID: #{selectedCustomer.id}</span>
               </div>
-              
+
               <div className="modal-details">
                 <div className="detail-group">
                   <i className="bi bi-envelope-fill"></i>
@@ -492,7 +590,9 @@ function Customers() {
                   <div>
                     <label>Address</label>
                     <p>{selectedCustomer.address || 'N/A'}</p>
-                    <p>{selectedCustomer.city}, {selectedCustomer.pin}</p>
+                    {selectedCustomer.city && selectedCustomer.pincode && (
+                      <p>{selectedCustomer.city}, {selectedCustomer.state} - {selectedCustomer.pincode}</p>
+                    )}
                   </div>
                 </div>
                 <div className="detail-group">
@@ -513,7 +613,7 @@ function Customers() {
                   <i className="bi bi-shield-check"></i>
                   <div>
                     <label>KYC Status</label>
-                    <p className={`status-text ${selectedCustomer.kyc_status}`}>
+                    <p className={`status-text ${selectedCustomer.kyc_status || 'pending'}`}>
                       {selectedCustomer.kyc_status || 'pending'}
                     </p>
                   </div>
@@ -522,18 +622,38 @@ function Customers() {
                   <i className="bi bi-person-check"></i>
                   <div>
                     <label>Customer Status</label>
-                    <p className={`status-text ${selectedCustomer.customer_status}`}>
+                    <p className={`status-text ${selectedCustomer.customer_status || 'active'}`}>
                       {selectedCustomer.customer_status || 'active'}
                     </p>
                   </div>
                 </div>
-                <div className="detail-group">
-                  <i className="bi bi-calendar-plus-fill"></i>
-                  <div>
-                    <label>Join Date</label>
-                    <p>{formatDate(selectedCustomer.join_date)}</p>
+                {selectedCustomer.join_date && (
+                  <div className="detail-group">
+                    <i className="bi bi-calendar-plus-fill"></i>
+                    <div>
+                      <label>Join Date</label>
+                      <p>{formatDate(selectedCustomer.join_date)}</p>
+                    </div>
                   </div>
-                </div>
+                )}
+                {selectedCustomer.anniversary && (
+                  <div className="detail-group">
+                    <i className="bi bi-heart-fill"></i>
+                    <div>
+                      <label>Anniversary</label>
+                      <p>{formatDate(selectedCustomer.anniversary)}</p>
+                    </div>
+                  </div>
+                )}
+                {selectedCustomer.birthday && (
+                  <div className="detail-group">
+                    <i className="bi bi-gift-fill"></i>
+                    <div>
+                      <label>Birthday</label>
+                      <p>{formatDate(selectedCustomer.birthday)}</p>
+                    </div>
+                  </div>
+                )}
                 <div className="detail-group">
                   <i className="bi bi-clock-history"></i>
                   <div>

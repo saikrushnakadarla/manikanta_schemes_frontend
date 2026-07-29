@@ -15,6 +15,7 @@ import Customers from "./Components/Customers/Customers";
 import CustomersForm from "./Components/Customers/CustomersForm";
 import CustomerSchemesEnrolment from "./Components/CustomerSchemesEnrolment/CustomerSchemesEnrolment";
 import CustomerSchemesEnrolmentForm from "./Components/CustomerSchemesEnrolment/CustomerSchemesEnrolmentForm"
+import CustomerSchemes from "./Components/Customers/CustomerSchemes";
 
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
         <Route exact path="/customers" component={Customers} />
         <Route exact path="/customersform" component={CustomersForm} />
         <Route exact path="/customerschemesenrolment" component={CustomerSchemesEnrolment} />
-        <Route exact path="/customerschemesenrolmentform" component={CustomerSchemesEnrolmentForm} />
+        <Route exact path="/customerschemesenrolmentform" component={CustomerSchemesEnrolmentForm} /> 
+        <Route path="/customer_schemes" element={CustomerSchemes } />
       </Switch>
     </Router>
   );

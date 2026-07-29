@@ -1,0 +1,239 @@
+.customer-schemes-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Header with back button */
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.back-btn {
+  padding: 8px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.back-btn:hover {
+  background: #5a67d8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Copy the rest of the styles from the original Schemes.css */
+/* (Include all the CSS from the Schemes.css provided above) */
+
+/* Additional styles for modal */
+.modal-details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.modal-details-section {
+  background: #f7fafc;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.modal-details-section h5 {
+  margin: 0 0 1rem 0;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.modal-details-section h5 i {
+  color: #667eea;
+}
+
+.detail-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-group:last-child {
+  border-bottom: none;
+}
+
+.detail-group i {
+  color: #667eea;
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+.detail-group label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.detail-group p {
+  margin: 0;
+  color: #2d3748;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.pending-info {
+  font-size: 0.75rem !important;
+  color: #f59e0b !important;
+}
+
+.progress-bar-large {
+  flex-direction: column !important;
+  align-items: stretch !important;
+}
+
+.progress-bar-large .progress-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #4a5568;
+  margin-bottom: 0.25rem;
+}
+
+.next-due-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.due-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: white;
+  border-radius: 8px;
+}
+
+.due-detail i {
+  color: #667eea;
+  font-size: 1rem;
+}
+
+.due-detail label {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+}
+
+.due-detail p {
+  margin: 0;
+  color: #2d3748;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.status-pending-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.pending {
+  background: #f59e0b;
+}
+
+.status-dot.active {
+  background: #48bb78;
+}
+
+.status-dot.completed {
+  background: #4299e1;
+}
+
+.no-due {
+  text-align: center;
+  padding: 1rem;
+  color: #48bb78;
+}
+
+.no-due i {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.no-due p {
+  margin: 0;
+  color: #718096;
+}
+
+.details-loading,
+.details-error {
+  text-align: center;
+  padding: 2rem;
+}
+
+.details-loading .spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+.details-error i {
+  font-size: 2rem;
+  color: #dc3545;
+}
+
+.modal-ids {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
+}
+
+.enrollment-id-badge,
+.customer-id-badge {
+  display: inline-block;
+  background: #edf2f7;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #4a5568;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .next-due-card {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-details-grid {
+    gap: 1rem;
+  }
+  
+  .modal-details-section {
+    padding: 0.75rem;
+  }
+}

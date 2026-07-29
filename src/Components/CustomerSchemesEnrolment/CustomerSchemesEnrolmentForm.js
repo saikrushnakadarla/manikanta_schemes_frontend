@@ -34,8 +34,12 @@ function CustomerSchemesEnrolmentForm() {
       if (location.state.isEditMode && location.state.enrollmentData) {
         setIsEditMode(true);
         setEnrollmentId(location.state.enrollmentData.enrollment_id);
+        
+        // Find the customer to get their account_id
+        const customer = customers.find(c => c.account_id === location.state.enrollmentData.customer);
+        
         setFormData({
-          customer: location.state.enrollmentData.customer || '',
+          customer: customer ? customer.account_id : location.state.enrollmentData.customer || '',
           scheme: location.state.enrollmentData.scheme || '',
           enrollment_date: location.state.enrollmentData.enrollment_date || new Date().toISOString().split('T')[0],
           remarks: location.state.enrollmentData.remarks || '',
@@ -130,8 +134,12 @@ function CustomerSchemesEnrolmentForm() {
 
     try {
       const token = localStorage.getItem('token');
+      
+      // Find the selected scheme - using scheme_id
       const selectedScheme = schemes.find(s => s.scheme_id === parseInt(formData.scheme));
-      const selectedCustomer = customers.find(c => c.id === parseInt(formData.customer));
+      
+      // Find the selected customer - using account_id
+      const selectedCustomer = customers.find(c => c.account_id === parseInt(formData.customer));
       
       if (!selectedScheme || !selectedCustomer) {
         throw new Error('Invalid customer or scheme selected');
@@ -141,8 +149,8 @@ function CustomerSchemesEnrolmentForm() {
       const enrollmentNumber = isEditMode ? undefined : generateEnrollmentNumber();
       
       const requestData = {
-        customer: parseInt(formData.customer),
-        scheme: parseInt(formData.scheme),
+        customer: parseInt(formData.customer), // This is the account_id
+        scheme: parseInt(formData.scheme), // This is the scheme_id
         enrollment_date: formData.enrollment_date,
         maturity_date: maturityDate,
         remarks: formData.remarks,
@@ -250,8 +258,8 @@ function CustomerSchemesEnrolmentForm() {
                 <select name="customer" className="form-control" value={formData.customer} onChange={handleInputChange} required disabled={isEditMode}>
                   <option value="">-- Select Customer --</option>
                   {customers.map(customer => (
-                    <option key={customer.id} value={customer.id}>
-                      {customer.name} - {customer.phone_number}
+                    <option key={customer.account_id || customer.id} value={customer.account_id || customer.id}>
+                      {customer.account_name} - {customer.phone}
                     </option>
                   ))}
                 </select>
