@@ -145,6 +145,12 @@ const Navbar = () => {
                 <i className="bi bi-house-door"></i>
                 <span>Dashboard</span>
               </Link>
+            </li> 
+              <li>
+              <Link to="/orders" onClick={() => setIsMobileMenuOpen(false)}>
+                <i className="bi bi-person"></i>
+                <span>Orders</span>
+              </Link>
             </li>
             <li>
               <Link to="/users" onClick={() => setIsMobileMenuOpen(false)}>
